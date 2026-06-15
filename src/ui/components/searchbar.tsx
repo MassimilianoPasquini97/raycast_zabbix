@@ -15,7 +15,8 @@ function Items({
   if (!zabbixServer?.length) return;
 
   const showItemAll = React.useMemo(() => {
-    if (selectedZabbixServer === "all") return true;
+    if (selectedZabbixServer && selectedZabbixServer.toLowerCase() === "all")
+      return true;
     if (isLoading) return false;
     return zabbixServer.length > 1;
   }, [isLoading, zabbixServer, selectedZabbixServer]);

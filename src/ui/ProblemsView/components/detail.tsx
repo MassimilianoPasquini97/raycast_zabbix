@@ -15,7 +15,7 @@ function MetadataProblems({
   /* Metadata: Zabbix Server Name */
   const metaServerName = React.useMemo(() => {
     const uuid = ctxSelectedServer.value;
-    if (uuid === "all")
+    if (uuid && uuid.toLowerCase() === "all")
       return (
         <List.Item.Detail.Metadata.Label
           title="Server"
