@@ -38,16 +38,6 @@ export function Problems(
 }
 
 /**
- * Get Cache Key where storing last min_Severity used.
- */
-export function ProblemsMinSeverity(
-  server: string,
-  params: TypesZabbix.ZabbixParamsTriggerGet,
-): string {
-  return cacheKey("problems_params_min_severity", server, params);
-}
-
-/**
  * Get Cache Key where storing Hosts Data.
  */
 export function Hosts(
