@@ -470,10 +470,11 @@ export function ActionConfigureHost({
         title: "Host Deleted",
       });
     } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
       await showToast({
         style: Toast.Style.Failure,
         title: "Error Deleting Host",
-        message: `${error instanceof Error ? error : String(error)}`,
+        message: msg,
       });
     } finally {
       setIsLoadingAction(false);

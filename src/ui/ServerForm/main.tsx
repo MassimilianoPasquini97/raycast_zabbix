@@ -90,18 +90,12 @@ export function ServerForm(props: props): React.JSX.Element {
         console.warn(error);
 
         /* Show Error */
-        if (error instanceof Error)
-          await showToast({
-            style: Toast.Style.Failure,
-            title: "Connection Error",
-            message: error.message,
-          });
-        else
-          await showToast({
-            style: Toast.Style.Failure,
-            title: "Connection Error",
-            message: String(error),
-          });
+        const msg = error instanceof Error ? error.message : String(error);
+        await showToast({
+          style: Toast.Style.Failure,
+          title: "Connection Error",
+          message: msg,
+        });
 
         /* Set Loading */
         SetIsLoading(false);
