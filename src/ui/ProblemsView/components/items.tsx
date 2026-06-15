@@ -36,10 +36,7 @@ export function ListItems({
     value: ShowAck,
     setValue: SetShowAck,
     isLoading: IsLoadingShowAck,
-  } = useLocalStorage<boolean>(
-    LocalStorageKey.KeyProblemsShowAck(LocalStorageKeyShowAck),
-    true,
-  );
+  } = useLocalStorage<boolean>(LocalStorageKeyShowAck, true);
 
   const filteredData = React.useMemo(() => {
     /* Return unfiltered Data */
