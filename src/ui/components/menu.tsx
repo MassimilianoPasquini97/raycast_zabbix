@@ -152,7 +152,11 @@ export function ActionPanelSectionZabbixServer({
 }: ActionPanelSectionZabbixServerProps): React.JSX.Element {
   /* Memo: showActionRemoveZabbixServer */
   const showActionRemoveZabbixServer = React.useMemo(() => {
-    if (zabbixServer && selectedZabbixServer && selectedZabbixServer !== "all")
+    if (
+      zabbixServer &&
+      selectedZabbixServer &&
+      selectedZabbixServer.toLowerCase() !== "all"
+    )
       return true;
     return false;
   }, [zabbixServer, selectedZabbixServer]);
@@ -267,10 +271,11 @@ export function ActionConfigureTrigger({
           title: "Changing Severity Complete",
         });
       } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
         await showToast({
           style: Toast.Style.Failure,
           title: "Error Changing Severity",
-          message: `${error instanceof Error ? error : String(error)}`,
+          message: msg,
         });
       } finally {
         setIsLoadingAction(false);
@@ -308,10 +313,11 @@ export function ActionConfigureTrigger({
         title: "Trigger Disabled",
       });
     } catch (error) {
+      const msg = error instanceof Error ? error.message : String(error);
       await showToast({
         style: Toast.Style.Failure,
         title: "Error Disabling Trigger",
-        message: `${error instanceof Error ? error : String(error)}`,
+        message: msg,
       });
     } finally {
       setIsLoadingAction(false);
@@ -425,10 +431,11 @@ export function ActionConfigureHost({
           title: toastTitleSuccess.at(status)!,
         });
       } catch (error) {
+        const msg = error instanceof Error ? error.message : String(error);
         await showToast({
           style: Toast.Style.Failure,
           title: toastTitleError.at(status)!,
-          message: `${error instanceof Error ? error : String(error)}`,
+          message: msg,
         });
       } finally {
         setIsLoadingAction(false);
