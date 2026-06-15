@@ -99,11 +99,11 @@ export function ListItems({
   if (data && data.length)
     return (
       <React.Fragment>
-        {data.map((item, index) => (
+        {data.map((item) => (
           <Item
             value={item}
             selectedZabbixServer={selectedZabbixServer}
-            key={index}
+            key={`${item.server_uuid}:${item.hostid}`}
             actions={
               <ActionMenu
                 isLoading={isLoading}
