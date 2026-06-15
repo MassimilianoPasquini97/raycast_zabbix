@@ -80,8 +80,8 @@ export function ListItems({
           <List.Item
             title={item.hosts?.at(0)?.name ?? ""}
             subtitle={item.lastEvent?.name ?? ""}
-            id={item.triggerid}
-            key={item.triggerid}
+            id={`${item.server_uuid}:${item.triggerid}`}
+            key={`${item.server_uuid}:${item.triggerid}`}
             keywords={getKeywords(item)}
             accessories={
               ctxShowDetail.value
