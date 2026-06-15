@@ -4,33 +4,27 @@ export function GetProblemDuration(clock: number): string {
   const timeProblem = new Date(clock * 1000);
   const timeNow = new Date();
 
-  let years = timeNow.getFullYear() - timeProblem.getFullYear();
-  let months = timeNow.getMonth() - timeProblem.getMonth();
-  let days = timeNow.getDate() - timeProblem.getDate();
-  let hours = timeNow.getHours() - timeProblem.getHours();
-  let minutes = timeNow.getMinutes() - timeProblem.getMinutes();
-  let seconds = timeNow.getSeconds() - timeProblem.getSeconds();
+  const diff = Math.max(0, timeNow.getTime() - timeProblem.getTime());
+  if (!Number.isFinite(diff) || diff <= 0) return "0s";
 
-  if (seconds < 0) {
-    seconds += 60;
-    minutes--;
+  let seconds = Math.floor(diff / 1000);
+  let minutes = Math.floor(seconds / 60);
+  seconds %= 60;
+  let hours = Math.floor(minutes / 60);
+  minutes %= 60;
+  let days = Math.floor(hours / 24);
+  hours %= 24;
+  let months = 0;
+  let years = 0;
+
+  /* Approximate months/years from days (best-effort, no full calendar math) */
+  if (days >= 30) {
+    months = Math.floor(days / 30);
+    days %= 30;
   }
-  if (minutes < 0) {
-    minutes += 60;
-    hours--;
-  }
-  if (hours < 0) {
-    hours += 24;
-    days--;
-  }
-  if (days < 0) {
-    const prevMonth = new Date(timeNow.getFullYear(), timeNow.getMonth(), 0);
-    days += prevMonth.getDate();
-    months--;
-  }
-  if (months < 0) {
-    months += 12;
-    years--;
+  if (months >= 12) {
+    years = Math.floor(months / 12);
+    months %= 12;
   }
 
   let output = "";
@@ -41,7 +35,8 @@ export function GetProblemDuration(clock: number): string {
   if (minutes > 0 && months + years === 0) output += `${minutes}m, `;
   if (seconds > 0 && hours + days + months + years === 0)
     output += `${seconds}s, `;
-  return output.slice(0, -2);
+  const trimmed = output.slice(0, -2);
+  return trimmed || "0s";
 }
 
 export function GetAccessorySeverity(
