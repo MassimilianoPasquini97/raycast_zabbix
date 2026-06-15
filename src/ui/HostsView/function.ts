@@ -22,7 +22,7 @@ export async function LoadData(
   let config = structuredClone(ZabbixServer);
 
   /* Filter Config */
-  if (SelectedZabbixServer.toLocaleLowerCase() !== "all")
+  if (SelectedZabbixServer.toLowerCase() !== "all")
     config = config.filter((v) => v.uuid === SelectedZabbixServer);
 
   const data: Types.DataHostsView[] = [];
@@ -63,10 +63,12 @@ export async function LoadData(
     /* Log Error */
     if (p.status === "rejected") {
       console.warn(`Zabbix Server "${name}"`, p.reason);
+      const reason =
+        p.reason instanceof Error ? p.reason.message : String(p.reason);
       await showToast({
         style: Toast.Style.Failure,
         title: `Error Loading Zabbix Data from "${name}"`,
-        message: p.reason,
+        message: reason,
       });
       continue;
     }
