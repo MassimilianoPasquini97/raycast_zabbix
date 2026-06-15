@@ -5,6 +5,7 @@ import { Cache, showToast, Toast } from "@raycast/api";
 import {
   ZabbixParamsTriggerGet,
   ZabbixResponseEventGet,
+  ZabbixResponseEventGetResult,
   ZabbixResponseTriggerGet,
 } from "../../api/zabbix/types";
 
@@ -74,8 +75,17 @@ export async function LoadData(
       continue;
     }
 
-    /* Get Event Data */
+    /* Remove Trigger with lowered severity */
+    if (Params.min_severity)
+      p.value.result = p.value.result.filter(
+        (v) =>
+          !v.lastEvent?.severity ||
+          v.lastEvent.severity >= Params.min_severity!,
+      );
+
+    /* Get Event Data (parallel per server, non-mutating lookup) */
     let events: ZabbixResponseEventGet | undefined;
+    let eventsMap: Map<string, ZabbixResponseEventGetResult>;
     const eventIds = p.value.result
       .map((v) => v.lastEvent?.eventid)
       .filter((v) => v !== undefined);
@@ -85,24 +95,13 @@ export async function LoadData(
         new ZabbixClient({ url: url, key: key }),
         eventIds,
       );
-
-    /* Remove Trigger with lowered severity */
-    if (Params.min_severity)
-      p.value.result = p.value.result.filter(
-        (v) =>
-          !v.lastEvent?.severity ||
-          v.lastEvent.severity >= Params.min_severity!,
-      );
+    if (events) eventsMap = new Map(events.result.map((e) => [e.eventid, e]));
 
     /* Map to DataProblemsView */
     const d = p.value.result.map((v) => {
-      /* Get Event Data */
       let event;
-      if (events && v.lastEvent?.eventid) {
-        const index = events.result.findIndex(
-          (eV) => eV.eventid === v.lastEvent?.eventid,
-        );
-        if (index > -1) event = events.result.splice(index, 1).at(0)!;
+      if (eventsMap && v.lastEvent?.eventid) {
+        event = eventsMap.get(v.lastEvent.eventid);
       }
 
       return <Types.DataProblemsView>{
