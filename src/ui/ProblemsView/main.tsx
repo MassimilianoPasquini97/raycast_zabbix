@@ -115,11 +115,10 @@ export function ProblemsView(props: props): React.JSX.Element {
   }, [ZabbixServer, IsLoadingZabbixServer]);
 
   /* Revalidate Data on SelectedZabbixServer Change
-     Skip when custom launchContext (props.server + props.params) is in use:
-     those views manage their own data and should not be affected by the global
-     server selector changing. This avoids overwriting custom problem filters. */
+     Or when custom launchContext (props.server + props.params) is in use and Data
+     is undefined */
   React.useEffect(() => {
-    if (props.server || props.params) return;
+    if (!Data && props.server && props.params) handleRevalidateData();
     if (!IsLoading && SelectedZabbixServer) handleRevalidateData();
   }, [SelectedZabbixServer, props.server, props.params]);
 
