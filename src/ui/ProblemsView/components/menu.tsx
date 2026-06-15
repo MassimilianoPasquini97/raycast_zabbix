@@ -177,14 +177,17 @@ function ActionSetMinSeverity(): React.JSX.Element | undefined {
     isLoading: IsLoadingMinSeverity,
   } = useLocalStorage<number>(LocalStorageKeyMinSeverity, 3);
 
-  const setSeverity = React.useCallback(async (value: number) => {
-    /* Exit if value isn't changed */
-    if (MinSeverity === value) return;
+  const setSeverity = React.useCallback(
+    async (value: number) => {
+      /* Exit if value isn't changed */
+      if (MinSeverity === value) return;
 
-    /* Set Min Severity and Revalidate Data */
-    await SetMinSeverity(value);
-    await ctxHandleRevalidateData.revalidateData();
-  }, []);
+      /* Set Min Severity and Revalidate Data */
+      await SetMinSeverity(value);
+      await ctxHandleRevalidateData.revalidateData();
+    },
+    [MinSeverity, SetMinSeverity, ctxHandleRevalidateData],
+  );
 
   const IsLoading = React.useMemo(() => {
     return ctxHandleRevalidateData.isLoading || IsLoadingMinSeverity;
