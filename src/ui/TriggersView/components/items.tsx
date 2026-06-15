@@ -66,9 +66,9 @@ export function ListItems({
   if (data && data.length)
     return (
       <React.Fragment>
-        {data.map((item, key) => (
+        {data.map((item) => (
           <Item
-            key={key}
+            key={`${item.server_uuid}:${item.triggerid}`}
             value={item}
             actions={<ActionMenu value={item} />}
             showHostAccessory={showHostAccessory}
