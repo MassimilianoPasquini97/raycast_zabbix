@@ -1,0 +1,53 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "raycast-zabbix",
+  "title": "Zabbix",
+  "description": "Show Zabbix Server Problems",
+  "icon": "icon.png",
+  "author": "massimiliano_pasquini",
+  "platforms": [
+    "Windows",
+    "macOS"
+  ],
+  "categories": [
+    "Productivity"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MassimilianoPasquini97/raycast_zabbix.git"
+  },
+  "scripts": {
+    "dev": "ray develop",
+    "lint": "ray lint",
+    "fix-lint": "ray lint --fix",
+    "build": "ray build",
+    "publish": "npx @raycast/api@latest publish"
+  },
+  "commands": [
+    {
+      "mode": "view",
+      "name": "problems",
+      "title": "Problems",
+      "description": "Show Zabbix Problems"
+    },
+    {
+      "mode": "view",
+      "name": "hosts",
+      "title": "Hosts",
+      "description": "Show Zabbix Hosts"
+    }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.103.0",
+    "@raycast/utils": "^2.2.1"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "^2.0.4",
+    "@types/node": "^22.19.17",
+    "@types/react": "^19.2.6",
+    "eslint": "^9.22.0",
+    "prettier": "^3.8.3",
+    "typescript": "^5.9.3"
+  }
+}
