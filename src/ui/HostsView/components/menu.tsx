@@ -171,12 +171,12 @@ export function ActionMenu({
 
   const dns = React.useMemo(() => {
     if (!value?.interfaces?.length) return;
-    return value.interfaces.filter((i) => i.dns && i.dns !== "").at(1)?.dns;
+    return value.interfaces.filter((i) => i.dns && i.dns !== "").at(0)?.dns;
   }, [value?.interfaces]);
 
   const ip = React.useMemo(() => {
     if (!value?.interfaces?.length) return;
-    return value.interfaces.filter((i) => i.ip && i.ip !== "").at(1)?.ip;
+    return value.interfaces.filter((i) => i.ip && i.ip !== "").at(0)?.ip;
   }, [value?.interfaces]);
 
   return (
