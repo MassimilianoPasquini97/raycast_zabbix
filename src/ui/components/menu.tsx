@@ -173,8 +173,7 @@ export function ActionPanelSectionZabbixServer({
     if (index > -1) config.splice(index, 1);
 
     /* Change Selected Zabbix Server */
-    if (config.length) setSelectedZabbixServer(config.at(0)!.uuid);
-
+    if (config.length) await setSelectedZabbixServer(config.at(0)!.uuid);
     /* Clear LocalStorage */
     await ClearLocalStorage(selectedZabbixServer);
 
