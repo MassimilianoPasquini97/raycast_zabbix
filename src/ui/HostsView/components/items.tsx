@@ -2,7 +2,7 @@ import * as React from "react";
 import * as Types from "@ui/types";
 import * as ContextGlobal from "@ui/context";
 import { Icon, List } from "@raycast/api";
-import { ItemAccessory } from "./accessoty";
+import { ItemAccessory } from "./accessory";
 import { ActionMenu } from "./menu";
 import { DetailHosts } from "./detail";
 
