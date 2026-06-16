@@ -84,7 +84,7 @@ export function ServerForm(props: props): React.JSX.Element {
         const version = await client.MethodApiInfoVersion();
 
         /* Zabbix Server but be 7.0.0 or above */
-        if (Number(version.result.substring(0, 1)) < 7)
+        if (Number(version.result.split(".")[0]) < 7)
           throw new Error(`Zabbix Server ${version.result} is not supported.`);
       } catch (error) {
         console.warn(error);
