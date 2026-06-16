@@ -87,7 +87,8 @@ export async function LoadData(
 
     /* Get Event Data (parallel per server, non-mutating lookup) */
     let events: ZabbixResponseEventGet | undefined;
-    let eventsMap: Map<string, ZabbixResponseEventGetResult>;
+    let eventsMap: Map<string, ZabbixResponseEventGetResult> | undefined =
+      undefined;
     const eventIds = p.value.result
       .map((v) => v.lastEvent?.eventid)
       .filter((v) => v !== undefined);
